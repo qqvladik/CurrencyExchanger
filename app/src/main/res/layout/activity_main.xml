@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".presentation.CurrencyExchangeActivity">
 
     <TextView
         android:id="@+id/balance_title"
@@ -67,10 +67,9 @@
 
 
     <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/cell_currency_spinner"
+        android:id="@+id/cell_currency_types_spinner"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/sell_image_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -79,15 +78,15 @@
         tools:listitem="@layout/currency_type_item" />
 
     <EditText
-        android:id="@+id/sell_sum_edit_text"
+        android:id="@+id/sell_amount_edit_text"
         style="@style/ExchangeTextStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="20dp"
-        android:hint="@string/sell_sum_edit_text_hint"
+        android:hint="@string/sell_amount_edit_text_hint"
         android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="@+id/sell_text"
-        app:layout_constraintEnd_toStartOf="@+id/cell_currency_spinner"
+        app:layout_constraintEnd_toStartOf="@+id/cell_currency_types_spinner"
         app:layout_constraintHorizontal_bias="0.849"
         app:layout_constraintStart_toEndOf="@+id/sell_text"
         app:layout_constraintTop_toTopOf="@+id/sell_text"
@@ -125,10 +124,9 @@
         app:layout_constraintTop_toTopOf="@+id/receive_image_view" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/receive_currency_spinner"
+        android:id="@+id/receive_currency_types_spinner"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/receive_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -137,14 +135,14 @@
         tools:listitem="@layout/currency_type_item" />
 
     <TextView
-        android:id="@+id/receive_sum_text"
+        android:id="@+id/receive_amount_text"
         style="@style/ExchangeTextStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="20dp"
         android:textColor="@color/green"
         app:layout_constraintBottom_toBottomOf="@+id/receive_text"
-        app:layout_constraintEnd_toStartOf="@+id/receive_currency_spinner"
+        app:layout_constraintEnd_toStartOf="@+id/receive_currency_types_spinner"
         app:layout_constraintHorizontal_bias="0.849"
         app:layout_constraintStart_toEndOf="@+id/receive_text"
         app:layout_constraintTop_toTopOf="@+id/receive_text"

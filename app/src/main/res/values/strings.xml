@@ -4,7 +4,7 @@
     <string name="currency_exchange_title">Currency Exchange</string>
     <string name="sell_image_view_description">Arrow up</string>
     <string name="sell_text">Sell</string>
-    <string name="sell_sum_edit_text_hint">Amount</string>
+    <string name="sell_amount_edit_text_hint">Amount</string>
     <string name="sell_divider_description">Divider</string>
     <string name="receive_image_view_description">Arrow down</string>
     <string name="receive_text">Receive</string>
