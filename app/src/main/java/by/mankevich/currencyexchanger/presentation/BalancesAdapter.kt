@@ -2,8 +2,8 @@ package by.mankevich.currencyexchanger.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import by.mankevich.currencyexchanger.base.presentation.BaseAdapter
-import by.mankevich.currencyexchanger.base.presentation.BaseViewHolder
+import by.mankevich.currencyexchanger.core.presentation.BaseAdapter
+import by.mankevich.currencyexchanger.core.presentation.BaseViewHolder
 import by.mankevich.currencyexchanger.databinding.BalanceItemBinding
 import by.mankevich.currencyexchanger.domain.entity.Balance
 

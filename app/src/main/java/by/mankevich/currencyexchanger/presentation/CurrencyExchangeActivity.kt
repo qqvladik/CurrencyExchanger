@@ -1,25 +1,27 @@
 package by.mankevich.currencyexchanger.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import by.mankevich.currencyexchanger.R
-import by.mankevich.currencyexchanger.databinding.ActivityMainBinding
+import by.mankevich.currencyexchanger.CurrencyExchangerApp
+import by.mankevich.currencyexchanger.core.presentation.BaseActivity
+import by.mankevich.currencyexchanger.databinding.CurrencyExchangeActivityBinding
 import by.mankevich.currencyexchanger.domain.entity.Balance
 import by.mankevich.currencyexchanger.utils.SpacingItemDecorator
 
-class CurrencyExchangeActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMainBinding
+class CurrencyExchangeActivity : BaseActivity<CurrencyExchangeActivityBinding, CurrencyExchangeViewModel>(
+    CurrencyExchangeViewModel::class.java
+) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         initViews()
+        viewModel.response.observe(this){ response->
+            Log.d("My", "response: $response")//TODO убрать
+        }
     }
 
     private fun initViews() {
@@ -54,4 +56,11 @@ class CurrencyExchangeActivity : AppCompatActivity() {
         binding.receiveCurrencyTypesSpinner.adapter = adapterCurrencyTypes
     }
 
+    override fun initDaggerComponent(){
+        (application as CurrencyExchangerApp).appComponent.injectActivity(this)
+    }
+
+    override fun initBinding(): CurrencyExchangeActivityBinding {
+        return CurrencyExchangeActivityBinding.inflate(layoutInflater)
+    }
 }

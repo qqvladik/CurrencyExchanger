@@ -1,9 +1,9 @@
-package by.mankevich.currencyexchanger.base.presentation
+package by.mankevich.currencyexchanger.core.presentation
 
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import by.mankevich.currencyexchanger.base.domain.IEntity
+import by.mankevich.currencyexchanger.core.domain.IEntity
 
 private const val TAG = "RAMBaseViewHolder"
 
