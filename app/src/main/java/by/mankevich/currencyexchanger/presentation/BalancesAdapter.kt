@@ -32,7 +32,7 @@ class BalancesAdapter(
         override fun bindView(entity: Balance) {
             binding.balanceItemText.text = entity.amount.toString()
                 .plus(" ")
-                .plus(entity.currency)
+                .plus(entity.currencyType)
         }
     }
 

@@ -20,7 +20,7 @@ class CurrencyExchangeNetworkModule {
         okHttpClient: OkHttpClient,
         @BaseUrl baseUrl: String
     ) = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create(gson))//TODO надо как то переделать конвертер, не видит тип валюты и курс
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .client(okHttpClient)
         .baseUrl(baseUrl)
         .build()

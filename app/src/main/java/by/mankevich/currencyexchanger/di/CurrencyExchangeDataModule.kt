@@ -4,13 +4,12 @@ import android.content.Context
 import androidx.room.Room
 import by.mankevich.currencyexchanger.data.api.CurrencyExchangeApi
 import by.mankevich.currencyexchanger.data.db.BalanceDao
-import by.mankevich.currencyexchanger.data.db.CurrencyDao
+import by.mankevich.currencyexchanger.data.db.CurrencyRateDao
 import by.mankevich.currencyexchanger.data.db.CurrencyExchangeDatabase
 import by.mankevich.currencyexchanger.data.repository.CurrencyExchangeRepositoryImpl
 import by.mankevich.currencyexchanger.domain.repository.CurrencyExchangeRepository
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 class CurrencyExchangeDataModule {
@@ -28,9 +27,9 @@ class CurrencyExchangeDataModule {
     fun provideCurrencyExchangeRepository(
         currencyExchangeApi: CurrencyExchangeApi,
         balanceDao: BalanceDao,
-        currencyDao: CurrencyDao,
+        currencyRateDao: CurrencyRateDao,
     ): CurrencyExchangeRepository {
-        return CurrencyExchangeRepositoryImpl(currencyExchangeApi, balanceDao, currencyDao)
+        return CurrencyExchangeRepositoryImpl(currencyExchangeApi, balanceDao, currencyRateDao)
     }
 
     @Provides

@@ -19,5 +19,5 @@ abstract class CurrencyExchangeDatabase : RoomDatabase() {
     }
 
     abstract fun getBalanceDao(): BalanceDao
-    abstract fun getCurrencyDao(): CurrencyDao
+    abstract fun getCurrencyDao(): CurrencyRateDao
 }

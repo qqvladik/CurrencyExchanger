@@ -6,6 +6,6 @@ import by.mankevich.currencyexchanger.core.domain.IEntity
 
 @Entity
 data class Balance(
-    @PrimaryKey val currency: String,
+    @PrimaryKey val currencyType: String,
     val amount: Double
 ) : IEntity

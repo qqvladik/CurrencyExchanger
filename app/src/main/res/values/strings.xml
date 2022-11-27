@@ -10,4 +10,5 @@
     <string name="receive_text">Receive</string>
     <string name="receive_divider_description">Divider</string>
     <string name="submit_button_text">Submit</string>
+    <string name="receive_amount_placeholder_text">+%1$s</string>
 </resources>
