@@ -16,12 +16,13 @@ import javax.inject.Inject
 private const val DEFAULT_CURRENCY_EUR_TYPE = "EUR"
 private const val DEFAULT_CURRENCY_EUR_AMOUNT = 1000.0
 private const val REQUEST_INTERVAL = 5000L
+private const val NON_INITIALIZED_AMOUNT_VALUE = -1.0
 
 class CurrencyExchangeViewModel @Inject constructor(
     private val repository: CurrencyExchangeRepository
 ) : ViewModel() {
 
-    var sellAmount: Double? = 0.0
+    var sellAmount: Double? = NON_INITIALIZED_AMOUNT_VALUE
         set(value) {
             field = value
             calculateReceiveAmount()
@@ -117,7 +118,10 @@ class CurrencyExchangeViewModel @Inject constructor(
     }
 
     private fun calculateReceiveAmount() {
-        if (sellAmount == 0.0 || sellCurrencyType == null || receiveCurrencyType == null) return
+        if (sellAmount == NON_INITIALIZED_AMOUNT_VALUE
+            || sellCurrencyType == null
+            || receiveCurrencyType == null
+        ) return
         viewModelScope.launch {
             _receiveAmount.value = repository.calculateReceiveAmount(
                 sellAmount!!,
