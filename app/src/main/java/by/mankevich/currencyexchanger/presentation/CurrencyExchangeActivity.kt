@@ -155,22 +155,22 @@ class CurrencyExchangeActivity :
                 val message: String = when (submitState) {
                     is SubmitState.Success -> String.format(
                         getString(R.string.submit_success_message_format_text),
-                        submitState.sellMoney!!.amountAndCurrencyText(),
-                        submitState.receiveMoney!!.amountAndCurrencyText(),
-                        submitState.commission!!.amountAndCurrencyText()
+                        submitState.sellMoney.amountAndCurrencyText(),
+                        submitState.receiveMoney.amountAndCurrencyText(),
+                        submitState.commission.amountAndCurrencyText()
                     )
                     is SubmitState.SmallAmount -> String.format(
                         getString(R.string.submit_small_amount_message_format_text),
-                        submitState.storageSellBalance!!.amountAndCurrencyText(),
-                        submitState.sellMoney!!.amountAndCurrencyText()
+                        submitState.storageSellBalance.amountAndCurrencyText(),
+                        submitState.sellMoney.amountAndCurrencyText()
                     )
                     is SubmitState.NoType -> String.format(
                         getString(R.string.submit_no_type_message_format_text),
-                        submitState.sellMoney!!.currencyType
+                        submitState.sellMoney.currencyType
                     )
                     is SubmitState.SameType -> String.format(
                         getString(R.string.submit_same_type_message_format_text),
-                        submitState.sellMoney!!.currencyType
+                        submitState.sellMoney.currencyType
                     )
                 }
                 setTitle(submitState.type)
