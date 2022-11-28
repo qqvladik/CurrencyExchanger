@@ -9,11 +9,13 @@ import by.mankevich.currencyexchanger.domain.entity.Money
 import by.mankevich.currencyexchanger.domain.entity.User
 import by.mankevich.currencyexchanger.domain.repository.CurrencyExchangeRepository
 import by.mankevich.currencyexchanger.domain.repository.SubmitState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val DEFAULT_CURRENCY_EUR_TYPE = "EUR"
 private const val DEFAULT_CURRENCY_EUR_AMOUNT = 1000.0
+private const val REQUEST_INTERVAL = 5000L
 
 class CurrencyExchangeViewModel @Inject constructor(
     private val repository: CurrencyExchangeRepository
@@ -36,6 +38,8 @@ class CurrencyExchangeViewModel @Inject constructor(
             field = value
             calculateReceiveAmount()
         }
+
+    private var isViewModelActive = true
 
     private val _balances = MutableLiveData<List<Money>>()
     val balances: LiveData<List<Money>>
@@ -94,7 +98,10 @@ class CurrencyExchangeViewModel @Inject constructor(
 
     private fun fetchCurrencyRates() {
         viewModelScope.launch {
-            repository.fetchCurrencyRates()
+            while (isViewModelActive) {
+                repository.fetchCurrencyRates()
+                delay(REQUEST_INTERVAL)
+            }
         }
     }
 
@@ -126,5 +133,10 @@ class CurrencyExchangeViewModel @Inject constructor(
             val receiveMoney = Money(receiveCurrencyType!!, _receiveAmount.value!!)
             _submitState.value = repository.submitExchange(sellMoney, receiveMoney)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        isViewModelActive = false
     }
 }
