@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.CurrencyExchangeActivity">
+
+    <TextView
+        android:id="@+id/balance_title"
+        style="@style/TitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/balance_title"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/balance_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/balance_title"
+        tools:itemCount="1"
+        tools:listitem="@layout/balance_item" />
+
+    <TextView
+        android:id="@+id/currency_exchange_title"
+        style="@style/TitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/currency_exchange_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/balance_container" />
+
+
+    <ImageView
+        android:id="@+id/sell_image_view"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/sell_image_view_description"
+        android:src="@drawable/ic_baseline_arrow_circle_up_24"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/currency_exchange_title" />
+
+    <TextView
+        android:id="@+id/sell_text"
+        style="@style/ExchangeTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="12dp"
+        android:gravity="center"
+        android:text="@string/sell_text"
+        app:layout_constraintBottom_toBottomOf="@+id/sell_image_view"
+        app:layout_constraintStart_toEndOf="@+id/sell_image_view"
+        app:layout_constraintTop_toTopOf="@+id/sell_image_view" />
+
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/sell_currency_types_spinner"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sell_image_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/sell_text"
+        app:layout_constraintTop_toTopOf="@+id/sell_image_view"
+        tools:listitem="@layout/currency_type_item" />
+
+    <EditText
+        android:id="@+id/sell_amount_edit_text"
+        style="@style/ExchangeTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:hint="@string/sell_amount_edit_text_hint"
+        android:inputType="numberDecimal"
+        android:maxLength="10"
+        app:layout_constraintBottom_toBottomOf="@+id/sell_text"
+        app:layout_constraintEnd_toStartOf="@+id/sell_currency_types_spinner"
+        app:layout_constraintHorizontal_bias="0.849"
+        app:layout_constraintStart_toEndOf="@+id/sell_text"
+        app:layout_constraintTop_toTopOf="@+id/sell_text"
+        tools:text="100.00" />
+
+    <ImageView
+        android:id="@+id/sell_divider"
+        style="@style/DividerStyle"
+        android:layout_width="0dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/sell_divider_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/sell_text"
+        app:layout_constraintTop_toBottomOf="@+id/sell_image_view" />
+
+    <ImageView
+        android:id="@+id/receive_image_view"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/receive_image_view_description"
+        android:src="@drawable/ic_baseline_arrow_circle_down_24"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/sell_divider" />
+
+    <TextView
+        android:id="@+id/receive_text"
+        style="@style/ExchangeTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="12dp"
+        android:text="@string/receive_text"
+        app:layout_constraintBottom_toBottomOf="@+id/receive_image_view"
+        app:layout_constraintStart_toEndOf="@+id/receive_image_view"
+        app:layout_constraintTop_toTopOf="@+id/receive_image_view" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/receive_currency_types_spinner"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/receive_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/receive_text"
+        app:layout_constraintTop_toTopOf="@+id/receive_text"
+        tools:listitem="@layout/currency_type_item" />
+
+    <TextView
+        android:id="@+id/receive_amount_text"
+        style="@style/ExchangeTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:textColor="@color/green"
+        android:maxLines="2"
+        app:layout_constraintBottom_toBottomOf="@+id/receive_text"
+        app:layout_constraintEnd_toStartOf="@+id/receive_currency_types_spinner"
+        app:layout_constraintHorizontal_bias="0.849"
+        app:layout_constraintStart_toEndOf="@+id/receive_text"
+        app:layout_constraintTop_toTopOf="@+id/receive_text" />
+
+    <ImageView
+        android:id="@+id/receive_divider"
+        style="@style/DividerStyle"
+        android:layout_width="0dp"
+        android:layout_marginTop="6dp"
+        android:contentDescription="@string/receive_divider_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/receive_text"
+        app:layout_constraintTop_toBottomOf="@+id/receive_image_view" />
+
+    <Button
+        android:id="@+id/submit_button"
+        style="@style/ButtonDarkStyle"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/submit_button_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="12dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
