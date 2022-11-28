@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import by.mankevich.currencyexchanger.core.presentation.BaseViewModel
+import by.mankevich.currencyexchanger.data.repository.USER_NAME_MANKEVICH
 import by.mankevich.currencyexchanger.domain.entity.Money
+import by.mankevich.currencyexchanger.domain.entity.User
 import by.mankevich.currencyexchanger.domain.repository.CurrencyExchangeRepository
 import by.mankevich.currencyexchanger.domain.repository.SubmitState
 import kotlinx.coroutines.launch
@@ -52,10 +54,21 @@ class CurrencyExchangeViewModel @Inject constructor(
         get() = _submitState
 
     init {
+        setDefaultUser()
         setDefaultBalance()
         fetchBalances()
         fetchCurrencyRates()
         fetchCurrencyTypes()
+    }
+
+    private fun setDefaultUser() {
+        viewModelScope.launch {
+            if (repository.isUsersEmpty()) {
+                repository.saveUser(
+                    User(USER_NAME_MANKEVICH)
+                )
+            }
+        }
     }
 
     private fun setDefaultBalance() {
@@ -93,7 +106,6 @@ class CurrencyExchangeViewModel @Inject constructor(
                     _currencyTypes.value = currencyTypes
                 }
             }
-
         }
     }
 

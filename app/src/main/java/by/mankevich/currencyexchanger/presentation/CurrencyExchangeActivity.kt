@@ -122,7 +122,7 @@ class CurrencyExchangeActivity :
         viewModel.currencyTypes.observe(this) { currencyTypes ->
             val adapterCurrencyTypes = ArrayAdapter(
                 this,
-                android.R.layout.simple_spinner_item,
+                R.layout.currency_type_item,
                 currencyTypes
             )
             binding.sellCurrencyTypesSpinner.adapter = adapterCurrencyTypes
@@ -132,8 +132,7 @@ class CurrencyExchangeActivity :
 
     private fun observeReceiveAmount() {
         viewModel.receiveAmount.observe(this) { receiveAmount ->
-            binding.receiveAmountText.text = receiveAmount.toString()
-                String.format(
+            binding.receiveAmountText.text = String.format(
                 getString(R.string.receive_amount_format_text),
                 receiveAmount
             )
@@ -148,7 +147,7 @@ class CurrencyExchangeActivity :
                         getString(R.string.submit_success_message_format_text),
                         submitState.sellMoney!!.amountAndCurrencyText(),
                         submitState.receiveMoney!!.amountAndCurrencyText(),
-                        submitState.fee!!.amountAndCurrencyText()
+                        submitState.commission!!.amountAndCurrencyText()
                     )
                     is SubmitState.SmallAmount -> String.format(
                         getString(R.string.submit_small_amount_message_format_text),
@@ -157,6 +156,10 @@ class CurrencyExchangeActivity :
                     )
                     is SubmitState.NoType -> String.format(
                         getString(R.string.submit_no_type_message_format_text),
+                        submitState.sellMoney!!.currencyType
+                    )
+                    is SubmitState.SameType -> String.format(
+                        getString(R.string.submit_same_type_message_format_text),
                         submitState.sellMoney!!.currencyType
                     )
                 }

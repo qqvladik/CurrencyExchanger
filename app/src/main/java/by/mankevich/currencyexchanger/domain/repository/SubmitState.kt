@@ -6,18 +6,18 @@ sealed class SubmitState(
     val type: String,
     val sellMoney: Money? = null,
     val receiveMoney: Money? = null,
-    val fee: Money? = null,
+    val commission: Money? = null,
     val storageSellBalance: Money? = null
 ) {
     class Success(
         sellMoney: Money,
         receiveMoney: Money,
-        fee: Money,
+        commission: Money,
     ) : SubmitState(
-        type = "Success",
+        type = "Currency converted",
         sellMoney = sellMoney,
         receiveMoney = receiveMoney,
-        fee = fee,
+        commission = commission,
         )
 
     class SmallAmount(
@@ -30,6 +30,13 @@ sealed class SubmitState(
     )
 
     class NoType(
+        sellMoney: Money
+    ) : SubmitState(
+        type = "Error",
+        sellMoney = sellMoney
+    )
+
+    class SameType(
         sellMoney: Money
     ) : SubmitState(
         type = "Error",

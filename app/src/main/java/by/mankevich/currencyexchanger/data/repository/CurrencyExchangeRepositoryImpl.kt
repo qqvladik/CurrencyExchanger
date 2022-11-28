@@ -3,8 +3,11 @@ package by.mankevich.currencyexchanger.data.repository
 import by.mankevich.currencyexchanger.data.api.CurrencyExchangeApi
 import by.mankevich.currencyexchanger.data.db.BalanceDao
 import by.mankevich.currencyexchanger.data.db.CurrencyRateDao
+import by.mankevich.currencyexchanger.data.db.UserDao
 import by.mankevich.currencyexchanger.domain.entity.Money
 import by.mankevich.currencyexchanger.domain.entity.CurrencyRate
+import by.mankevich.currencyexchanger.domain.entity.User
+import by.mankevich.currencyexchanger.domain.repository.CommissionCalculator
 import by.mankevich.currencyexchanger.domain.repository.CurrencyExchangeRepository
 import by.mankevich.currencyexchanger.domain.repository.SubmitState
 import by.mankevich.currencyexchanger.utils.minus
@@ -16,7 +19,9 @@ import kotlinx.coroutines.flow.map
 open class CurrencyExchangeRepositoryImpl(
     private val currencyExchangeApi: CurrencyExchangeApi,
     private val balanceDao: BalanceDao,
-    private val currencyRateDao: CurrencyRateDao
+    private val currencyRateDao: CurrencyRateDao,
+    private val userDao: UserDao,
+    private val commissionCalculator: CommissionCalculator
 ) : CurrencyExchangeRepository {
 
     override suspend fun fetchCurrencyRates(): List<CurrencyRate> {
@@ -57,6 +62,14 @@ open class CurrencyExchangeRepositoryImpl(
         return balanceDao.getBalance(currencyType)
     }
 
+    override suspend fun isUsersEmpty(): Boolean {
+        return userDao.isEmpty()
+    }
+
+    override suspend fun saveUser(user: User) {
+        userDao.insertUser(user)
+    }
+
     override suspend fun calculateReceiveAmount(
         sellAmount: Double,
         receiveCurrencyType: String,
@@ -75,21 +88,30 @@ open class CurrencyExchangeRepositoryImpl(
         sellMoney: Money,
         receiveMoney: Money
     ): SubmitState {
+        if (sellMoney.currencyType == receiveMoney.currencyType) {
+            return SubmitState.SameType(sellMoney)
+        }
+
         val storageSellBalance =
             getBalance(sellMoney.currencyType) ?: return SubmitState.NoType(sellMoney)
 
-        if (storageSellBalance.amount < sellMoney.amount) {
-            return SubmitState.SmallAmount(sellMoney, storageSellBalance)
+        val commission = commissionCalculator.calcCommission(
+            sellMoney
+        )
+        val commissionWithSellMoney = sellMoney + commission
+
+        if (storageSellBalance.amount < (commissionWithSellMoney).amount) {
+            return SubmitState.SmallAmount(commissionWithSellMoney, storageSellBalance)
         }
 
-        saveBalance(storageSellBalance - sellMoney)
+        saveBalance(storageSellBalance - commissionWithSellMoney)
         val storageReceiveBalance = getBalance(receiveMoney.currencyType)
         if (storageReceiveBalance == null) {
             saveBalance(receiveMoney)
         } else {
             saveBalance(storageReceiveBalance + receiveMoney)
         }
-        return SubmitState.Success(sellMoney, receiveMoney, Money("EUR", 0.70))
+        return SubmitState.Success(sellMoney, receiveMoney, commission)
     }
 }
 
