@@ -1,10 +1,10 @@
 # Currency Exchanger
 
-## Used tech stack
+## Tech stack
 
 - Coroutines
 - Dagger 2
-- MVVM desgin pattern, Clean Architecture
-- Room database
+- MVVM, Clean Architecture
+- Room
 - Retrofit
 - Kotlin
