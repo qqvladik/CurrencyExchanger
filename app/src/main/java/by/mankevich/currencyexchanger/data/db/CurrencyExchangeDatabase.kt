@@ -2,12 +2,12 @@ package by.mankevich.currencyexchanger.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import by.mankevich.currencyexchanger.domain.entity.Balance
+import by.mankevich.currencyexchanger.domain.entity.Money
 import by.mankevich.currencyexchanger.domain.entity.CurrencyRate
 
 @Database(
     entities = [
-        Balance::class,
+        Money::class,
         CurrencyRate::class
     ],
     version = CurrencyExchangeDatabase.DATABASE_VERSION

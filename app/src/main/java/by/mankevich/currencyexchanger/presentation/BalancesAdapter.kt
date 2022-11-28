@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import by.mankevich.currencyexchanger.core.presentation.BaseAdapter
 import by.mankevich.currencyexchanger.core.presentation.BaseViewHolder
 import by.mankevich.currencyexchanger.databinding.BalanceItemBinding
-import by.mankevich.currencyexchanger.domain.entity.Balance
+import by.mankevich.currencyexchanger.domain.entity.Money
+import by.mankevich.currencyexchanger.utils.amountAndCurrencyText
 
 class BalancesAdapter(
-    balances: List<Balance>,
-    private var onItemClick: (Balance) -> Unit = {}
+    balances: List<Money> = listOf(),
+    private var onItemClick: (Money) -> Unit = {}
 ) :
-    BaseAdapter<Balance, BalanceItemBinding, BalancesAdapter.BalanceViewHolder>(
+    BaseAdapter<Money, BalanceItemBinding, BalancesAdapter.BalanceViewHolder>(
         balances
     ) {
 
@@ -23,16 +24,15 @@ class BalancesAdapter(
 
     inner class BalanceViewHolder(
         binding: BalanceItemBinding,
-        onItemClick: (Balance) -> Unit
+        onItemClick: (Money) -> Unit
     ) :
-        BaseViewHolder<Balance, BalanceItemBinding>(
+        BaseViewHolder<Money, BalanceItemBinding>(
             binding, onItemClick
         ) {
 
-        override fun bindView(entity: Balance) {
-            binding.balanceItemText.text = entity.amount.toString()
-                .plus(" ")
-                .plus(entity.currencyType)
+        override fun bindView(entity: Money) {
+            binding.balanceItemText.text = entity.amountAndCurrencyText()
+
         }
     }
 

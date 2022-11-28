@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import by.mankevich.currencyexchanger.core.domain.IEntity
 
 @Entity
-data class Balance(
-    @PrimaryKey val currencyType: String,
-    val amount: Double
+data class Money(
+    @PrimaryKey var currencyType: String,
+    var amount: Double
 ) : IEntity

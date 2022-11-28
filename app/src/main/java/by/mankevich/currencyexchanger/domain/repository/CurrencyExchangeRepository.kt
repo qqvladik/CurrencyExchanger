@@ -1,16 +1,24 @@
 package by.mankevich.currencyexchanger.domain.repository
 
-import by.mankevich.currencyexchanger.domain.entity.Balance
+import by.mankevich.currencyexchanger.domain.entity.Money
 import by.mankevich.currencyexchanger.domain.entity.CurrencyRate
 import kotlinx.coroutines.flow.Flow
 
 interface CurrencyExchangeRepository {
 
-    suspend fun fetchAndSaveCurrencyRates(): List<CurrencyRate>
+    suspend fun fetchCurrencyRates(): List<CurrencyRate>
     fun getAllCurrencyTypes(): Flow<List<String>>
-    suspend fun getRate(type: String): Double
 
-    suspend fun saveBalance(balance: Balance)
-    fun getAllBalances(): Flow<List<Balance>>
-    fun getBalance(currencyType: String): Balance?
+    suspend fun isBalancesEmpty(): Boolean
+    suspend fun saveBalance(balance: Money)
+    fun getAllBalances(): Flow<List<Money>>
+    suspend fun getBalance(currencyType: String): Money?
+
+    suspend fun calculateReceiveAmount(
+        sellAmount: Double,
+        receiveCurrencyType: String,
+        sellCurrencyType: String
+    ): Double
+
+    suspend fun submitExchange(sellMoney: Money, receiveMoney: Money): SubmitState
 }

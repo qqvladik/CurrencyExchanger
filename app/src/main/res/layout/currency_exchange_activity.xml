@@ -67,8 +67,8 @@
 
 
     <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/cell_currency_types_spinner"
-        android:layout_width="wrap_content"
+        android:id="@+id/sell_currency_types_spinner"
+        android:layout_width="100dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/sell_image_view"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,8 +85,9 @@
         android:layout_marginHorizontal="20dp"
         android:hint="@string/sell_amount_edit_text_hint"
         android:inputType="numberDecimal"
+        android:maxLength="10"
         app:layout_constraintBottom_toBottomOf="@+id/sell_text"
-        app:layout_constraintEnd_toStartOf="@+id/cell_currency_types_spinner"
+        app:layout_constraintEnd_toStartOf="@+id/sell_currency_types_spinner"
         app:layout_constraintHorizontal_bias="0.849"
         app:layout_constraintStart_toEndOf="@+id/sell_text"
         app:layout_constraintTop_toTopOf="@+id/sell_text"
@@ -125,7 +126,7 @@
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/receive_currency_types_spinner"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/receive_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,8 +141,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="20dp"
-        android:text="@string/receive_amount_placeholder_text"
         android:textColor="@color/green"
+        android:maxLines="2"
         app:layout_constraintBottom_toBottomOf="@+id/receive_text"
         app:layout_constraintEnd_toStartOf="@+id/receive_currency_types_spinner"
         app:layout_constraintHorizontal_bias="0.849"

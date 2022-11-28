@@ -4,18 +4,21 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import by.mankevich.currencyexchanger.domain.entity.Balance
+import by.mankevich.currencyexchanger.domain.entity.Money
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BalanceDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertBalance(balance: Balance)
+    @Query("SELECT (SELECT COUNT(*) FROM Money) == 0")
+    suspend fun isEmpty(): Boolean
 
-    @Query("SELECT * FROM Balance ORDER BY amount DESC")
-    fun getAllBalances(): Flow<List<Balance>>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertBalance(balance: Money)
 
-    @Query("SELECT * FROM Balance WHERE currencyType = :currencyType ")
-    fun getBalance(currencyType: String): Balance?
+    @Query("SELECT * FROM Money ORDER BY amount DESC")
+    fun getAllBalances(): Flow<List<Money>>
+
+    @Query("SELECT * FROM Money WHERE currencyType = :currencyType ")
+    suspend fun getBalance(currencyType: String): Money?
 }
