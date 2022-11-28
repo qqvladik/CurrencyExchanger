@@ -2,8 +2,8 @@ package by.mankevich.currencyexchanger.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import by.mankevich.currencyexchanger.core.presentation.BaseViewModel
 import by.mankevich.currencyexchanger.data.repository.USER_NAME_MANKEVICH
 import by.mankevich.currencyexchanger.domain.entity.Money
 import by.mankevich.currencyexchanger.domain.entity.User
@@ -19,7 +19,7 @@ private const val REQUEST_INTERVAL = 5000L
 
 class CurrencyExchangeViewModel @Inject constructor(
     private val repository: CurrencyExchangeRepository
-) : BaseViewModel() {
+) : ViewModel() {
 
     var sellAmount: Double? = 0.0
         set(value) {

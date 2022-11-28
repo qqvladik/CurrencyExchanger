@@ -125,7 +125,7 @@ class CurrencyExchangeActivity :
             val sellPosition = binding.sellCurrencyTypesSpinner.selectedItemPosition
             val receivePosition = binding.receiveCurrencyTypesSpinner.selectedItemPosition
 
-            if (!currencyTypes.deepEqualTo(binding.sellCurrencyTypesSpinner.getList())) {
+            if (!currencyTypes.deepEqualTo(binding.sellCurrencyTypesSpinner.getList<String>())) {
                 val adapterCurrencyTypes = ArrayAdapter(
                     this,
                     R.layout.currency_type_item,

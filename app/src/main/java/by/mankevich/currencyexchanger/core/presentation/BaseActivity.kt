@@ -2,11 +2,12 @@ package by.mankevich.currencyexchanger.core.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import javax.inject.Inject
 
-abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel>(
+abstract class BaseActivity<VB : ViewBinding, VM : ViewModel>(
     private val viewModelClass: Class<VM>
 ) : AppCompatActivity() {
 

@@ -6,6 +6,7 @@ import by.mankevich.currencyexchanger.domain.repository.CommissionCalculator
 
 private const val COMMISSION = 0.007
 const val USER_NAME_MANKEVICH = "Mankevich"
+const val COMMISSION_FREE_AMOUNT = 0.0
 
 class CommissionCalculatorImpl(
     private val userDao: UserDao
@@ -16,7 +17,7 @@ class CommissionCalculatorImpl(
         val commissionAmount = if (user.counterFreeCommission >= 5) {
             COMMISSION * sellMoney.amount
         } else {
-            0.0
+            COMMISSION_FREE_AMOUNT
         }
         user.counterFreeCommission++
         userDao.insertUser(user)
