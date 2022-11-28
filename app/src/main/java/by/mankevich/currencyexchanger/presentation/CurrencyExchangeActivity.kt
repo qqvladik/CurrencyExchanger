@@ -14,6 +14,8 @@ import by.mankevich.currencyexchanger.databinding.CurrencyExchangeActivityBindin
 import by.mankevich.currencyexchanger.domain.repository.SubmitState
 import by.mankevich.currencyexchanger.utils.SpacingItemDecorator
 import by.mankevich.currencyexchanger.utils.amountAndCurrencyText
+import by.mankevich.currencyexchanger.utils.deepEqualTo
+import by.mankevich.currencyexchanger.utils.getList
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -120,13 +122,21 @@ class CurrencyExchangeActivity :
 
     private fun observeCurrencyTypes() {
         viewModel.currencyTypes.observe(this) { currencyTypes ->
-            val adapterCurrencyTypes = ArrayAdapter(
-                this,
-                R.layout.currency_type_item,
-                currencyTypes
-            )
-            binding.sellCurrencyTypesSpinner.adapter = adapterCurrencyTypes
-            binding.receiveCurrencyTypesSpinner.adapter = adapterCurrencyTypes
+            val sellPosition = binding.sellCurrencyTypesSpinner.selectedItemPosition
+            val receivePosition = binding.receiveCurrencyTypesSpinner.selectedItemPosition
+
+            if (!currencyTypes.deepEqualTo(binding.sellCurrencyTypesSpinner.getList())) {
+                val adapterCurrencyTypes = ArrayAdapter(
+                    this,
+                    R.layout.currency_type_item,
+                    currencyTypes
+                )
+                binding.sellCurrencyTypesSpinner.adapter = adapterCurrencyTypes
+                binding.receiveCurrencyTypesSpinner.adapter = adapterCurrencyTypes
+
+                binding.sellCurrencyTypesSpinner.setSelection(sellPosition)
+                binding.receiveCurrencyTypesSpinner.setSelection(receivePosition)
+            }
         }
     }
 
