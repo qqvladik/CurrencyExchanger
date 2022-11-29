@@ -4,42 +4,35 @@ import by.mankevich.currencyexchanger.domain.entity.Money
 
 sealed class SubmitState(
     val type: String,
-    val sellMoney: Money? = null,
-    val receiveMoney: Money? = null,
-    val commission: Money? = null,
-    val storageSellBalance: Money? = null
 ) {
-    class Success(
-        sellMoney: Money,
-        receiveMoney: Money,
-        commission: Money,
+    data class Success(
+        val sellMoney: Money,
+        val receiveMoney: Money,
+        val commission: Money,
     ) : SubmitState(
-        type = "Currency converted",
-        sellMoney = sellMoney,
-        receiveMoney = receiveMoney,
-        commission = commission,
-        )
-
-    class SmallAmount(
-        sellMoney: Money,
-        storageSellBalance: Money,
-    ) : SubmitState(
-        type = "Error",
-        sellMoney = sellMoney,
-        storageSellBalance = storageSellBalance
+        type = "Currency converted"
     )
 
-    class NoType(
-        sellMoney: Money
+    data class SmallAmount(
+        val sellMoney: Money,
+        val storageSellBalance: Money,
     ) : SubmitState(
         type = "Error",
-        sellMoney = sellMoney
     )
 
-    class SameType(
-        sellMoney: Money
+    data class NoBalanceType(
+        val sellMoney: Money
     ) : SubmitState(
         type = "Error",
-        sellMoney = sellMoney
+    )
+
+    data class SameType(
+        val sellMoney: Money
+    ) : SubmitState(
+        type = "Error",
+    )
+
+    class NoTypes() : SubmitState(
+        type = "Error",
     )
 }

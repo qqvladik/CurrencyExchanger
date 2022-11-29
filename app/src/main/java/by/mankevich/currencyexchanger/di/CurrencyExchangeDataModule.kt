@@ -2,6 +2,7 @@ package by.mankevich.currencyexchanger.di
 
 import android.content.Context
 import androidx.room.Room
+import by.mankevich.currencyexchanger.data.repository.ConnectivityChecker
 import by.mankevich.currencyexchanger.data.api.CurrencyExchangeApi
 import by.mankevich.currencyexchanger.data.db.BalanceDao
 import by.mankevich.currencyexchanger.data.db.CurrencyRateDao
@@ -29,6 +30,7 @@ class CurrencyExchangeDataModule {
     @Provides
     fun provideCurrencyExchangeRepository(
         currencyExchangeApi: CurrencyExchangeApi,
+        connectivityChecker: ConnectivityChecker,
         balanceDao: BalanceDao,
         currencyRateDao: CurrencyRateDao,
         userDao: UserDao,
@@ -36,11 +38,17 @@ class CurrencyExchangeDataModule {
     ): CurrencyExchangeRepository {
         return CurrencyExchangeRepositoryImpl(
             currencyExchangeApi,
+            connectivityChecker,
             balanceDao,
             currencyRateDao,
             userDao,
             commissionCalculator
         )
+    }
+
+    @Provides
+    fun provideConnectivityChecker(@ApplicationContext context: Context): ConnectivityChecker {
+        return ConnectivityChecker(context)
     }
 
     @Provides

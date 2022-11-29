@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,7 +36,9 @@ class CurrencyExchangeActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        checkConnectivity()
         initViews()
+
         setupEditTextListener()
         setupSellCurrencyTypesSpinnerListener()
         setupReceiveCurrencyTypesSpinnerListener()
@@ -45,6 +48,12 @@ class CurrencyExchangeActivity :
         observeCurrencyTypes()
         observeReceiveAmount()
         observeSubmitState()
+    }
+
+    private fun checkConnectivity(){
+        if (!viewModel.isConnect()) {
+            Toast.makeText(this, getString(R.string.no_internet_text), Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun initViews() {
@@ -125,7 +134,7 @@ class CurrencyExchangeActivity :
             val sellPosition = binding.sellCurrencyTypesSpinner.selectedItemPosition
             val receivePosition = binding.receiveCurrencyTypesSpinner.selectedItemPosition
 
-            if (!currencyTypes.deepEqualTo(binding.sellCurrencyTypesSpinner.getList())) {
+            if (!currencyTypes.deepEqualTo(binding.sellCurrencyTypesSpinner.getList<String>())) {
                 val adapterCurrencyTypes = ArrayAdapter(
                     this,
                     R.layout.currency_type_item,
@@ -155,23 +164,24 @@ class CurrencyExchangeActivity :
                 val message: String = when (submitState) {
                     is SubmitState.Success -> String.format(
                         getString(R.string.submit_success_message_format_text),
-                        submitState.sellMoney!!.amountAndCurrencyText(),
-                        submitState.receiveMoney!!.amountAndCurrencyText(),
-                        submitState.commission!!.amountAndCurrencyText()
+                        submitState.sellMoney.amountAndCurrencyText(),
+                        submitState.receiveMoney.amountAndCurrencyText(),
+                        submitState.commission.amountAndCurrencyText()
                     )
                     is SubmitState.SmallAmount -> String.format(
                         getString(R.string.submit_small_amount_message_format_text),
-                        submitState.storageSellBalance!!.amountAndCurrencyText(),
-                        submitState.sellMoney!!.amountAndCurrencyText()
+                        submitState.storageSellBalance.amountAndCurrencyText(),
+                        submitState.sellMoney.amountAndCurrencyText()
                     )
-                    is SubmitState.NoType -> String.format(
-                        getString(R.string.submit_no_type_message_format_text),
-                        submitState.sellMoney!!.currencyType
+                    is SubmitState.NoBalanceType -> String.format(
+                        getString(R.string.submit_no_balance_type_message_format_text),
+                        submitState.sellMoney.currencyType
                     )
                     is SubmitState.SameType -> String.format(
                         getString(R.string.submit_same_type_message_format_text),
-                        submitState.sellMoney!!.currencyType
+                        submitState.sellMoney.currencyType
                     )
+                    is SubmitState.NoTypes -> getString(R.string.submit_no_types_message_format_text)
                 }
                 setTitle(submitState.type)
                 setMessage(message)

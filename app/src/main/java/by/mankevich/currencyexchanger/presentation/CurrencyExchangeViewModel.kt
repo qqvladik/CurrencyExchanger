@@ -2,8 +2,8 @@ package by.mankevich.currencyexchanger.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import by.mankevich.currencyexchanger.core.presentation.BaseViewModel
 import by.mankevich.currencyexchanger.data.repository.USER_NAME_MANKEVICH
 import by.mankevich.currencyexchanger.domain.entity.Money
 import by.mankevich.currencyexchanger.domain.entity.User
@@ -19,9 +19,9 @@ private const val REQUEST_INTERVAL = 5000L
 
 class CurrencyExchangeViewModel @Inject constructor(
     private val repository: CurrencyExchangeRepository
-) : BaseViewModel() {
+) : ViewModel() {
 
-    var sellAmount: Double? = 0.0
+    var sellAmount: Double? = null
         set(value) {
             field = value
             calculateReceiveAmount()
@@ -64,6 +64,8 @@ class CurrencyExchangeViewModel @Inject constructor(
         fetchCurrencyRates()
         fetchCurrencyTypes()
     }
+
+    fun isConnect() = repository.isConnect()
 
     private fun setDefaultUser() {
         viewModelScope.launch {
@@ -117,10 +119,10 @@ class CurrencyExchangeViewModel @Inject constructor(
     }
 
     private fun calculateReceiveAmount() {
-        if (sellAmount == 0.0 || sellCurrencyType == null || receiveCurrencyType == null) return
+        if (!checkExchangeConditions()) return
         viewModelScope.launch {
             _receiveAmount.value = repository.calculateReceiveAmount(
-                sellAmount!!,
+                sellAmount ?: 0.0,
                 sellCurrencyType!!,
                 receiveCurrencyType!!
             )
@@ -128,11 +130,20 @@ class CurrencyExchangeViewModel @Inject constructor(
     }
 
     fun onSubmitExchange() {
+        if (!checkExchangeConditions()) {
+            _submitState.value = SubmitState.NoTypes()
+            return
+        }
         viewModelScope.launch {
-            val sellMoney = Money(sellCurrencyType!!, sellAmount!!)
+            val sellMoney = Money(sellCurrencyType!!, sellAmount ?: 0.0)
             val receiveMoney = Money(receiveCurrencyType!!, _receiveAmount.value!!)
             _submitState.value = repository.submitExchange(sellMoney, receiveMoney)
         }
+    }
+
+    private fun checkExchangeConditions(): Boolean {
+        return !(sellCurrencyType == null
+                || receiveCurrencyType == null)
     }
 
     override fun onCleared() {

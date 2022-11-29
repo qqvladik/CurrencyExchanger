@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/currency_exchange_vertical_padding"
+    android:paddingBottom="@dimen/currency_exchange_vertical_padding"
     tools:context=".presentation.CurrencyExchangeActivity">
 
     <TextView
@@ -11,7 +13,6 @@
         style="@style/TitleTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="@string/balance_title"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +24,7 @@
         android:id="@+id/balance_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/balance_container_top_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/balance_title"
@@ -35,19 +36,18 @@
         style="@style/TitleTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="@dimen/currency_exchange_title_top_margin"
         android:text="@string/currency_exchange_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/balance_container" />
 
-
     <ImageView
         android:id="@+id/sell_image_view"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="@dimen/arrow_image_view_size"
+        android:layout_height="@dimen/arrow_image_view_size"
+        android:layout_marginTop="@dimen/sell_image_view_top_margin"
         android:contentDescription="@string/sell_image_view_description"
         android:src="@drawable/ic_baseline_arrow_circle_up_24"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -58,17 +58,15 @@
         style="@style/ExchangeTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="12dp"
-        android:gravity="center"
+        android:layout_marginStart="@dimen/sell_receive_text_start_margin"
         android:text="@string/sell_text"
         app:layout_constraintBottom_toBottomOf="@+id/sell_image_view"
         app:layout_constraintStart_toEndOf="@+id/sell_image_view"
         app:layout_constraintTop_toTopOf="@+id/sell_image_view" />
 
-
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/sell_currency_types_spinner"
-        android:layout_width="100dp"
+        android:layout_width="@dimen/currency_types_spinner_width_size"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/sell_image_view"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +80,7 @@
         style="@style/ExchangeTextStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="@dimen/sell_amount_edit_text_horizontal_margin"
         android:hint="@string/sell_amount_edit_text_hint"
         android:inputType="numberDecimal"
         android:maxLength="10"
@@ -97,7 +95,7 @@
         android:id="@+id/sell_divider"
         style="@style/DividerStyle"
         android:layout_width="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/divider_top_margin"
         android:contentDescription="@string/sell_divider_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/sell_text"
@@ -105,8 +103,8 @@
 
     <ImageView
         android:id="@+id/receive_image_view"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/arrow_image_view_size"
+        android:layout_height="@dimen/arrow_image_view_size"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/receive_image_view_description"
         android:src="@drawable/ic_baseline_arrow_circle_down_24"
@@ -126,7 +124,7 @@
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/receive_currency_types_spinner"
-        android:layout_width="100dp"
+        android:layout_width="@dimen/currency_types_spinner_width_size"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/receive_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,7 +138,7 @@
         style="@style/ExchangeTextStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="@dimen/sell_amount_edit_text_horizontal_margin"
         android:textColor="@color/green"
         android:maxLines="2"
         app:layout_constraintBottom_toBottomOf="@+id/receive_text"
@@ -153,7 +151,7 @@
         android:id="@+id/receive_divider"
         style="@style/DividerStyle"
         android:layout_width="0dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="@dimen/divider_top_margin"
         android:contentDescription="@string/receive_divider_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/receive_text"
@@ -162,10 +160,7 @@
     <Button
         android:id="@+id/submit_button"
         style="@style/ButtonDarkStyle"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="@dimen/submit_button_horizontal_margin"
         android:text="@string/submit_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -176,6 +171,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="12dp" />
+        app:layout_constraintGuide_begin="@dimen/currency_exchange_horizontal_start_padding" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
