@@ -16,13 +16,12 @@ import javax.inject.Inject
 private const val DEFAULT_CURRENCY_EUR_TYPE = "EUR"
 private const val DEFAULT_CURRENCY_EUR_AMOUNT = 1000.0
 private const val REQUEST_INTERVAL = 5000L
-private const val NON_INITIALIZED_AMOUNT_VALUE = -1.0
 
 class CurrencyExchangeViewModel @Inject constructor(
     private val repository: CurrencyExchangeRepository
 ) : ViewModel() {
 
-    var sellAmount: Double? = NON_INITIALIZED_AMOUNT_VALUE
+    var sellAmount: Double? = null
         set(value) {
             field = value
             calculateReceiveAmount()
@@ -65,6 +64,8 @@ class CurrencyExchangeViewModel @Inject constructor(
         fetchCurrencyRates()
         fetchCurrencyTypes()
     }
+
+    fun isConnect() = repository.isConnect()
 
     private fun setDefaultUser() {
         viewModelScope.launch {
@@ -118,13 +119,10 @@ class CurrencyExchangeViewModel @Inject constructor(
     }
 
     private fun calculateReceiveAmount() {
-        if (sellAmount == NON_INITIALIZED_AMOUNT_VALUE
-            || sellCurrencyType == null
-            || receiveCurrencyType == null
-        ) return
+        if (!checkExchangeConditions()) return
         viewModelScope.launch {
             _receiveAmount.value = repository.calculateReceiveAmount(
-                sellAmount!!,
+                sellAmount ?: 0.0,
                 sellCurrencyType!!,
                 receiveCurrencyType!!
             )
@@ -132,11 +130,20 @@ class CurrencyExchangeViewModel @Inject constructor(
     }
 
     fun onSubmitExchange() {
+        if (!checkExchangeConditions()) {
+            _submitState.value = SubmitState.NoTypes()
+            return
+        }
         viewModelScope.launch {
-            val sellMoney = Money(sellCurrencyType!!, sellAmount!!)
+            val sellMoney = Money(sellCurrencyType!!, sellAmount ?: 0.0)
             val receiveMoney = Money(receiveCurrencyType!!, _receiveAmount.value!!)
             _submitState.value = repository.submitExchange(sellMoney, receiveMoney)
         }
+    }
+
+    private fun checkExchangeConditions(): Boolean {
+        return !(sellCurrencyType == null
+                || receiveCurrencyType == null)
     }
 
     override fun onCleared() {

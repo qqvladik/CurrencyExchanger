@@ -18,16 +18,21 @@ import kotlinx.coroutines.flow.map
 
 open class CurrencyExchangeRepositoryImpl(
     private val currencyExchangeApi: CurrencyExchangeApi,
+    private val connectivityChecker: ConnectivityChecker,
     private val balanceDao: BalanceDao,
     private val currencyRateDao: CurrencyRateDao,
     private val userDao: UserDao,
     private val commissionCalculator: CommissionCalculator
 ) : CurrencyExchangeRepository {
 
-    override suspend fun fetchCurrencyRates(): List<CurrencyRate> {
-        val currencyRateList = getCurrencyRates()
-        saveCurrencyRates(currencyRateList)
-        return currencyRateList
+    override fun isConnect(): Boolean = connectivityChecker.isConnect()
+
+    override suspend fun fetchCurrencyRates(): Boolean {
+        if (isConnect()) {
+            val currencyRateList: List<CurrencyRate> = getCurrencyRates()
+            saveCurrencyRates(currencyRateList)
+        }
+        return isConnect()
     }
 
     private suspend fun getCurrencyRates(): List<CurrencyRate> {
@@ -91,9 +96,8 @@ open class CurrencyExchangeRepositoryImpl(
         if (sellMoney.currencyType == receiveMoney.currencyType) {
             return SubmitState.SameType(sellMoney)
         }
-
         val storageSellBalance =
-            getBalance(sellMoney.currencyType) ?: return SubmitState.NoType(sellMoney)
+            getBalance(sellMoney.currencyType) ?: return SubmitState.NoBalanceType(sellMoney)
 
         val commission = commissionCalculator.calcCommission(
             sellMoney

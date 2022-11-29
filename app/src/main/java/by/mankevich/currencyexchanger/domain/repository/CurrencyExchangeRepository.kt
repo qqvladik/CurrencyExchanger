@@ -7,7 +7,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface CurrencyExchangeRepository {
 
-    suspend fun fetchCurrencyRates(): List<CurrencyRate>
+    fun isConnect(): Boolean
+
+    suspend fun fetchCurrencyRates(): Boolean
     fun getAllCurrencyTypes(): Flow<List<String>>
 
     suspend fun isBalancesEmpty(): Boolean

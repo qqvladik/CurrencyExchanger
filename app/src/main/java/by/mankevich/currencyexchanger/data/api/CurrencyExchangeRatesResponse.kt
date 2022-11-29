@@ -1,4 +1,4 @@
-package by.mankevich.currencyexchanger.data.api.response
+package by.mankevich.currencyexchanger.data.api
 
 data class CurrencyExchangeRatesResponse (
     val base: String,

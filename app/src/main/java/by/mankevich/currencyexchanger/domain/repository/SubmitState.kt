@@ -20,7 +20,7 @@ sealed class SubmitState(
         type = "Error",
     )
 
-    data class NoType(
+    data class NoBalanceType(
         val sellMoney: Money
     ) : SubmitState(
         type = "Error",
@@ -29,6 +29,10 @@ sealed class SubmitState(
     data class SameType(
         val sellMoney: Money
     ) : SubmitState(
+        type = "Error",
+    )
+
+    class NoTypes() : SubmitState(
         type = "Error",
     )
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,7 +36,9 @@ class CurrencyExchangeActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        checkConnectivity()
         initViews()
+
         setupEditTextListener()
         setupSellCurrencyTypesSpinnerListener()
         setupReceiveCurrencyTypesSpinnerListener()
@@ -45,6 +48,12 @@ class CurrencyExchangeActivity :
         observeCurrencyTypes()
         observeReceiveAmount()
         observeSubmitState()
+    }
+
+    private fun checkConnectivity(){
+        if (!viewModel.isConnect()) {
+            Toast.makeText(this, getString(R.string.no_internet_text), Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun initViews() {
@@ -164,14 +173,15 @@ class CurrencyExchangeActivity :
                         submitState.storageSellBalance.amountAndCurrencyText(),
                         submitState.sellMoney.amountAndCurrencyText()
                     )
-                    is SubmitState.NoType -> String.format(
-                        getString(R.string.submit_no_type_message_format_text),
+                    is SubmitState.NoBalanceType -> String.format(
+                        getString(R.string.submit_no_balance_type_message_format_text),
                         submitState.sellMoney.currencyType
                     )
                     is SubmitState.SameType -> String.format(
                         getString(R.string.submit_same_type_message_format_text),
                         submitState.sellMoney.currencyType
                     )
+                    is SubmitState.NoTypes -> getString(R.string.submit_no_types_message_format_text)
                 }
                 setTitle(submitState.type)
                 setMessage(message)
