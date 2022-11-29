@@ -29,3 +29,4 @@ There is a handling of various situations and a dialog box output:
 The first five currency exchanges are free of charge but afterwards they're charged commission 0.7% of the currency being traded.
 
 Time spent on the task - 20 hours.
+git repository - https://github.com/qqvladik/CurrencyExchanger.git
