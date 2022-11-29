@@ -6,4 +6,6 @@
     <color name="blue500">#2990DF</color>
     <color name="gray">#CECCCC</color>
     <color name="green">#309A3B</color>
+
+    <color name="text_contrast_color">@color/black</color>
 </resources>
