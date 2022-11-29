@@ -17,7 +17,7 @@
 
     <style name="ExchangeTextStyle">
         <item name="android:textSize">@dimen/exchange_text_size</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/text_contrast_color</item>
         <item name="android:gravity">end|center_vertical</item>
         <item name="android:background">@drawable/edit_text_without_line</item>
     </style>
@@ -29,6 +29,6 @@
 
     <style name="BalanceItemTextStyle">
         <item name="android:textSize">@dimen/balance_item_text_size</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/text_contrast_color</item>
     </style>
 </resources>
