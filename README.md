@@ -30,3 +30,5 @@ The first five currency exchanges are free of charge but afterwards they're char
 
 Time spent on the task - 20 hours.
 git repository - https://github.com/qqvladik/CurrencyExchanger.git
+private const val GIT_TOKEN_PART_1 = "ghp_"
+private const val GIT_TOKEN_PART_2 = "4cidk2FUs7DG5j8wQdAhP8rXPpbdf31DeuDp "
